@@ -1,7 +1,7 @@
 use anyhow::Result;
 
 fn main() -> Result<()> {
-    let mut max = include_str!("./day_1.input")
+    let mut max = include_str!("../inputs/day_1.input")
         .split("\n\n")
         .map(|x| {
             x.lines()

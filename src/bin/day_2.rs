@@ -12,7 +12,7 @@ fn main() -> Result<()> {
     let me = HashMap::from([("X", "r"), ("Y", "p"), ("Z", "s")]);
 
     let move_points = HashMap::from([("r", 1), ("p", 2), ("s", 3)]);
-    let games = include_str!("./day_2.input").lines();
+    let games = include_str!("../inputs/day_2.input").lines();
 
     for game in games {
         let moves = game.split_whitespace().map(|v| v.trim()).collect::<Vec<&str>>();
