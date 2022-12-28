@@ -69,12 +69,12 @@ fn main () -> Result<()> {
             if crates_to_move > stacks[origin_stack_id].len() {
                 println!("BIGGER crates to move are bigger than len of originstack");
                 stacks[origin_stack_id] = stacks[origin_stack_id][..(crates_to_move -1)].to_string();
-                let moved_crates = stacks[origin_stack_id][..(stacks[origin_stack_id].len())].to_string().chars().rev().collect::<String>();
+                let moved_crates = stacks[origin_stack_id][..(stacks[origin_stack_id].len())].to_string();
                 let stack_len = stacks[origin_stack_id].len();
                 stacks[destination_stack_id] = format!("{}{}", moved_crates, stacks[destination_stack_id]);
                 stacks[origin_stack_id] = stacks[origin_stack_id].chars().skip(stack_len).collect::<String>();
             } else {
-                let moved_crates = stacks[origin_stack_id][..crates_to_move].to_string().chars().rev().collect::<String>();
+                let moved_crates = stacks[origin_stack_id][..crates_to_move].to_string();
                 stacks[destination_stack_id] = format!("{}{}", moved_crates, stacks[destination_stack_id]);
                 stacks[origin_stack_id] = stacks[origin_stack_id].chars().skip(orders[0].try_into().unwrap()).collect::<String>();
             }
