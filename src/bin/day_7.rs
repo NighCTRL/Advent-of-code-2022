@@ -13,7 +13,8 @@ fn main () -> Result<()> {
             }
         });
     let total: i32 = dir_sizes.values().filter(|&size| *size < 100000).sum();
-    println!("total size = {}", total);
+    println!("total size of dir < 100000 = {}", total);
+    println!("min size deletion to update = {}", what_to_delete(&dir_sizes));
     return Ok(());
 }
 fn handle_cmd (cwd: &mut Vec<String>, dir_sizes: &mut HashMap<String, i32>, line: String) {
@@ -28,11 +29,11 @@ fn handle_cmd (cwd: &mut Vec<String>, dir_sizes: &mut HashMap<String, i32>, line
         } 
         else {
             cwd.push(command[2].to_string());
-            let path_string = cwd.join("/");
-            if ! dir_sizes.contains_key(&path_string) {
-                dir_sizes.insert(path_string, 0);
-            };
         }
+        let path_string = cwd.join("/");
+        if ! dir_sizes.contains_key(&path_string) {
+            dir_sizes.insert(path_string, 0);
+        };
     }
 }
 fn handle_file (cwd: &Vec<String>, dir_sizes: &mut HashMap<String, i32>, line: String) {
@@ -45,4 +46,14 @@ fn handle_file (cwd: &Vec<String>, dir_sizes: &mut HashMap<String, i32>, line: S
             dir_sizes.entry(update_dir_list.join("/")).and_modify(|size| *size += filesize);
         }
     }
+}
+fn what_to_delete (dir_sizes: & HashMap<String, i32>) -> i32 {
+    let minimum_delete = 30000000 - (70000000 - dir_sizes.get("root").unwrap());
+    let mut delete_dir_size = 30000000;
+    for (_, dir_size) in dir_sizes {
+        if dir_size > &minimum_delete && dir_size < &delete_dir_size {
+            delete_dir_size = *dir_size;
+        }
+    }
+    return delete_dir_size;
 }
